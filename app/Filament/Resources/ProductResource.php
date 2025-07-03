@@ -6,7 +6,9 @@ use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Tabs\Tab;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -37,6 +39,18 @@ class ProductResource extends Resource
                     ->numeric()
                     ->required()
                     ->label('Price'),
+
+                Textarea::make('description')->label('Description'),
+
+                Select::make('category_id')
+                    ->label('Category')
+                    ->relationship('category', 'name')
+                    ->searchable(),
+
+                Select::make('brand_id')
+                    ->label('Brand')
+                    ->relationship('brand', 'name')
+                    ->searchable(),
             ]);
     }
 
@@ -47,13 +61,15 @@ class ProductResource extends Resource
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('sku')->label('SKU'),
                 TextColumn::make('price')->money('usd'),
+                TextColumn::make('category.name')->sortable()->searchable()->label('Category'),
+                TextColumn::make('brand.name')->sortable()->searchable()->label('Brand'),
                 TextColumn::make('created_at')->dateTime()->label('Created'),
                 TextColumn::make('actions')->label('Actions')->alignRight(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ViewAction::make(),
             ]);
     }
 

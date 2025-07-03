@@ -10,5 +10,17 @@ class Product extends Model
         'name',
         'sku',
         'price',
+        'description',
+        'category_id',
+        'brand_id',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 }
