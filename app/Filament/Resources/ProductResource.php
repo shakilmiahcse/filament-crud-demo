@@ -22,7 +22,9 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
     public static function form(Form $form): Form
     {
@@ -59,8 +61,8 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('sku')->label('SKU'),
-                TextColumn::make('price')->money('usd'),
+                TextColumn::make('sku')->sortable()->searchable()->label('SKU'),
+                TextColumn::make('price')->money('bdt'),
                 TextColumn::make('category.name')->sortable()->searchable()->label('Category'),
                 TextColumn::make('brand.name')->sortable()->searchable()->label('Brand'),
                 TextColumn::make('created_at')->dateTime()->label('Created'),
